@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Admin-Datapar
+  Date: 28/11/2024
+  Time: 10:29 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Home</title>
+    <h:outputStylesheet name="styles.css"/>
+</h:head>
+
+<h:body>
+    <h:form>
+        <h:panelGrid columns="3" styleClass="book-grid">
+            <p:dataTable value="#{bookListBean.books}" var="book" rows="4" paginator="true">
+                <p:column>
+                    <p:panel header="#{book.title}" styleClass="book-panel">
+                        <h:outputText value="Autor: #{book.author}" styleClass="book-author"/>
+                        <h:outputText value="Precio: #{book.price}" styleClass="book-price"/>
+                    </p:panel>
+                </p:column>
+            </p:dataTable>
+        </h:panelGrid>
+    </h:form>
+</h:body>
+
+</html>

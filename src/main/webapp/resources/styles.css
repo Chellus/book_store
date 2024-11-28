@@ -1,0 +1,24 @@
+.book-grid {
+    display: grid;
+    width: 90%;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.book-card {
+    text-align: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.book-author {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.book-price {
+    color: green;
+    margin-top: 5px;
+}
