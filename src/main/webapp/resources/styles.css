@@ -1,24 +1,61 @@
-.book-grid {
-    display: grid;
-    width: 90%;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+.book-table {
+    width: 100%;
+    margin-top: 20px;
 }
 
-.book-card {
+.book-table .ui-datatable-data > tr {
+    height: 50px; /* Altura mínima de la fila */
+}
+
+
+.book-table .ui-widget-header {
+    background-color: #f4f4f4;
     text-align: center;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.book-author {
-    font-weight: bold;
+.book-table td {
+    padding: 15px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.book-table .ui-paginator {
+    text-align: center;
     margin-top: 10px;
 }
+.books-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+}
+.books-table {
+    width: 100%;
+    margin-top: 20px;
+}
 
-.book-price {
-    color: green;
-    margin-top: 5px;
+.books-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-container .ui-input-icon-left {
+    display: flex;
+    align-items: center;
+}
+
+.filter-container input {
+    width: 200px;
+    padding: 5px;
+    font-size: 14px;
 }

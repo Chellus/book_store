@@ -1,5 +1,7 @@
 package com.marcelo.book_store_jsf.book;
 
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -43,6 +45,26 @@ public class BookBean implements Serializable {
         book.setStock(10);
         book.setEdition("Primera");
         book.setLanguage("Español");
+    }
+
+    @PostConstruct
+    public void init() {
+        String idParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+        if (idParam != null) {
+            id = Long.parseLong(idParam);
+            book = bookService.getBook(id);
+            isbn = book.getIsbn();
+            title = book.getTitle();
+            author = book.getAuthor();
+            publisher = book.getPublisher();
+            pages = book.getPages();
+            genre = book.getGenre();
+            releaseDate = book.getReleaseDate();
+            stock = book.getStock();
+            edition = book.getEdition();
+            language = book.getLanguage();
+            price = book.getPrice();
+        }
     }
 
     public String add() {

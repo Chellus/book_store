@@ -22,16 +22,57 @@
 
 <h:body>
     <h:form>
-        <h:panelGrid columns="3" styleClass="book-grid">
-            <p:dataTable value="#{bookListBean.books}" var="book" rows="4" paginator="true">
-                <p:column>
-                    <p:panel header="#{book.title}" styleClass="book-panel">
-                        <h:outputText value="Autor: #{book.author}" styleClass="book-author"/>
-                        <h:outputText value="Precio: #{book.price}" styleClass="book-price"/>
-                    </p:panel>
-                </p:column>
-            </p:dataTable>
-        </h:panelGrid>
+        <!-- PrimeFaces DataTable para mostrar los libros -->
+        <p:dataTable value="#{bookListBean.books}" widgetVar="dtBooks" var="book"
+                     rows="10" rowKey="#{book.id}" paginator="true" paginatorPosition="bottom" styleClass="book-table"
+                     resizableColumns="true" liveResize="true">
+
+            <f:facet name="header">
+                <div class="books-table-header">
+                    <span style="font-weight: bold">LIBROS</span>
+                    <span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtBooks').filter()" placeholder="Buscar libros..." />
+                    </span>
+                </div>
+            </f:facet>
+
+            <!-- Columna para el Título -->
+            <p:column headerText="Título" filterBy="#{book.title}" filterStyle="display: none">
+                <h:outputText value="#{book.title}" />
+            </p:column>
+
+            <!-- Columna para el Autor -->
+            <p:column headerText="Autor" filterBy="#{book.author}" filterStyle="display: none">
+                <h:outputText value="#{book.author}" />
+            </p:column>
+
+            <!-- Columna para el Precio -->
+            <p:column headerText="Precio">
+                <h:outputText value="#{book.price}$" />
+            </p:column>
+
+            <!-- Columna para el Género -->
+            <p:column headerText="Género" filterBy="#{book.genre}" filterStyle="display:none">
+                <h:outputText value="#{book.genre}" />
+            </p:column>
+
+            <!-- Columna para la Fecha de Lanzamiento -->
+            <p:column headerText="Fecha de Lanzamiento">
+                <h:outputText value="#{book.releaseDate}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Estado">
+                <h:outputText value="#{book.stock > 0 ? 'EN STOCK' : 'FUERA DE STOCK'}"/>
+            </p:column>
+
+            <p:column headerText="Acciones">
+                <p:commandButton value="Ver Detalles" action="#{bookListBean.redirectToDetails(book.id)}" ajax="false"/>
+            </p:column>
+
+        </p:dataTable>
     </h:form>
 </h:body>
 
