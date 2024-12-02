@@ -17,4 +17,13 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>nova-light</param-value> <!-- Nombre del tema que deseas utilizar -->
     </context-param>
+
+    <filter>
+        <filter-name>login-filter</filter-name>
+        <filter-class>com.marcelo.book_store_jsf.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>login-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

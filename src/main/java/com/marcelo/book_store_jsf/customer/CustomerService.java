@@ -20,6 +20,10 @@ public class CustomerService {
         return results.isEmpty() ? null : results.get(0);
     }
 
+    public void addCustomer(Customer customer) {
+        em.persist(customer);
+    }
+
     public boolean validCustomer(String email, String password) {
         Customer customer = getCustomer(email);
 

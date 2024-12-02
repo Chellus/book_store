@@ -16,6 +16,7 @@ public class Customer {
     private String phone;
     private String email;
     private String password;
+    private String role;
 
     public Customer() {}
 
@@ -65,5 +66,13 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

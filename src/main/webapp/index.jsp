@@ -1,4 +1,4 @@
 <%@ page session="false" %>
 <%
-    response.sendRedirect("home.xhtml");
+    response.sendRedirect("register.xhtml");
 %>

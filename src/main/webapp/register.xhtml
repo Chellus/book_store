@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Admin-Datapar
+  Date: 29/11/2024
+  Time: 9:43 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Registro de usuario</title>
+</h:head>
+
+<h:body>
+    <h1>
+        Registro de usuario
+    </h1>
+    <div>
+        <h:form>
+            <p:growl id="growl" showDetail="true" showSummary="true" />
+
+            <span class="ui-float-label" style="margin-top: 40px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="name" value="#{customerBean.name}" required="true"/>
+                <p:outputLabel for="@previous" value="Nombre"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="address" value="#{customerBean.address}" required="true"/>
+                <p:outputLabel for="@previous" value="Dirección"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="phone" value="#{customerBean.phone}" required="true"/>
+                <p:outputLabel for="@previous" value="Número telefónico"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="email" value="#{customerBean.email}" required="true"/>
+                <p:outputLabel for="@previous" value="example@gmail.com"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:password id="password" value="#{customerBean.password}" required="true"/>
+                <p:outputLabel for="@previous" value="Contraseña"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:password id="confirm_pass" value="#{customerBean.confirmPassword}" required="true"/>
+                <p:outputLabel for="@previous" value="Confirmar contraseña"/>
+            </span>
+            <p:commandButton style="margin: 5px" id="register_button" action="#{customerBean.register}" value="Registrarse" update="growl"/>
+        </h:form>
+
+        <p style="margin-top: 10px">
+            <p:outputLabel value="Ya tiene un usuario? Inicie sesión " />
+            <p:link value="aquí." outcome="login"/>
+        </p>
+    </div>
+</h:body>
+
+</html>

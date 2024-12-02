@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Admin-Datapar
+  Date: 29/11/2024
+  Time: 9:43 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Registro de usuario</title>
+</h:head>
+
+<h:body>
+    <h1>
+        Inicio de sesión
+    </h1>
+    <div>
+        <h:form>
+            <p:growl id="growl" showDetail="true" showSummary="true" />
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="email" value="#{customerBean.email}" required="true"/>
+                <p:outputLabel for="@previous" value="example@gmail.com"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:password id="password" value="#{customerBean.password}" required="true"/>
+                <p:outputLabel for="@previous" value="Contraseña"/>
+            </span>
+
+            <p:commandButton style="margin: 5px" id="login_button" action="#{customerBean.login}" value="Iniciar sesión" update="growl"/>
+        </h:form>
+
+        <p style="margin-top: 10px">
+            <p:outputLabel value="Aún no está registrado? Regístrese " />
+            <p:link value="aquí." outcome="register"/>
+        </p>
+    </div>
+</h:body>
+
+</html>

@@ -59,3 +59,12 @@
     padding: 5px;
     font-size: 14px;
 }
+
+/* Contenedor para los botones */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se muevan a una nueva línea si no caben */
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 0.5rem; /* Espaciado entre los botones */
+}
+

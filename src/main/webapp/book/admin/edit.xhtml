@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Detalles del Libro</title>
+    <style>
+        /* Estilo personalizado para aumentar separación entre filas */
+        .spaced-rows .ui-panelgrid-cell {
+            padding: 10px 0; /* Espaciado vertical */
+        }
+
+        .twenty-percent {
+            width: 20%;
+        }
+
+        .thirty-percent {
+            width: 30%;
+        }
+        /* Estilo para el precio */
+        .price {
+            font-weight: bold;
+            color: green;
+            font-size: 1.2em;
+            margin-top: 10px;  /* Para agregar espacio entre el grid y el precio */
+        }
+
+
+    </style>
+</h:head>
+<h:body>
+    <h:form>
+        <p:panel header="Detalles del Libro" style="width: 90%; max-width: 1200px; height: auto; margin: 0 auto;">
+
+            <!-- Detalles dentro del panel grid -->
+            <p:panelGrid columns="4" styleClass="spaced-rows ui-panelgrid ui-widget"
+                         style="width: 100%;"
+                         columnClasses="twenty-percent ui-widget-header,thirty-percent ui-widget-content, twenty-percent ui-widget-header, thirty-percent ui-widget-content">
+                <h:outputText value="ISBN:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.isbn}" />
+
+                <h:outputText value="Título:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.title}" />
+
+                <h:outputText value="Autor:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.author}" />
+
+                <h:outputText value="Editorial:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.publisher}" />
+
+                <h:outputText value="Páginas:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.pages}" />
+
+                <h:outputText value="Género:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.genre}" />
+
+                <h:outputText value="Fecha de Publicación:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.releaseDate}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+
+                <h:outputText value="Stock:" style="padding-left: 5px"/>
+                <h:inputText value="#{bookBean.stock}" style="font-size: large"/>
+
+                <h:outputText value="Edición:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.edition}" />
+
+                <h:outputText value="Idioma:" style="padding-left: 5px"/>
+                <h:outputText value="#{bookBean.book.language}" />
+            </p:panelGrid>
+
+            <!-- Precio fuera del panel grid -->
+            <h:panelGroup>
+                <h:outputText value="Precio:" style="margin-top: 10px;" styleClass="ui-outputlabel" />
+                <h:inputText value="#{bookBean.price}"
+                              style="font-size: 1.5em; color: #3c8dbc; display: block; margin-bottom: 10px;" />
+            </h:panelGroup>
+
+            <h:panelGroup>
+                <p:commandButton style="margin: 20px; text-align: right" value="Confirmar" action="#{bookBean.update()}" ajax="false"/>
+                <p:commandButton style="margin: 20px; text-align: right; background-color: red" value="Volver" action="/home.xhtml" ajax="false"/>
+            </h:panelGroup>
+
+        </p:panel>
+    </h:form>
+</h:body>
+</html>

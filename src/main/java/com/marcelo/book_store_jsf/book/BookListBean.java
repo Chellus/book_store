@@ -1,6 +1,7 @@
 package com.marcelo.book_store_jsf.book;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -17,6 +18,7 @@ public class BookListBean implements Serializable {
     private BookService bookService;
 
     private List<Book> books;
+    private Book selectedBook;
 
     @PostConstruct
     public void init() {
@@ -28,11 +30,39 @@ public class BookListBean implements Serializable {
         return books;
     }
 
+    public void editBook(Long bookId) {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("book/admin/edit.xhtml?bookId=" + bookId);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteBook(Long bookId) {
+        bookService.deleteBook(bookId);
+        addMessage(FacesMessage.SEVERITY_INFO, "Book deleted", "Book deleted successfully");
+    }
+
+    public Book getSelectedBook() {
+        return selectedBook;
+    }
+
+    public void setSelectedBook(Book selectedBook) {
+        System.out.println("Selected book to be set: " + selectedBook);
+        this.selectedBook = selectedBook;
+    }
+
     public void redirectToDetails(Long bookId) {
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("book/details.xhtml?bookId=" + bookId);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance()
+                .addMessage(null, new FacesMessage(severity, summary, detail));
     }
 }

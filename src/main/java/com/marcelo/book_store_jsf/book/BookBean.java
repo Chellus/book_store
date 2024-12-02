@@ -6,6 +6,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.DataInput;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -33,24 +34,14 @@ public class BookBean implements Serializable {
     private double price;
 
     public BookBean() {
-        book = new Book();
-        book.setId(1L);
-        book.setIsbn("978-3-16-148410-0");
-        book.setTitle("El Quijote");
-        book.setAuthor("Miguel de Cervantes");
-        book.setPublisher("Editorial Ejemplo");
-        book.setPages(1023);
-        book.setGenre("Novela");
-        book.setReleaseDate(new Date());
-        book.setStock(10);
-        book.setEdition("Primera");
-        book.setLanguage("Español");
+
     }
 
     @PostConstruct
     public void init() {
-        String idParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+        String idParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("bookId");
         if (idParam != null) {
+            System.out.println("Id = " + idParam);
             id = Long.parseLong(idParam);
             book = bookService.getBook(id);
             isbn = book.getIsbn();
@@ -84,21 +75,13 @@ public class BookBean implements Serializable {
         return "success";
     }
 
-    public String update() {
-        book = new Book();
-        book.setIsbn(isbn);
-        book.setTitle(title);
-        book.setAuthor(author);
-        book.setPublisher(publisher);
-        book.setPages(pages);
-        book.setGenre(genre);
+    public void update() throws IOException {
         book.setPrice(price);
-        book.setEdition(edition);
-        book.setLanguage(language);
         book.setStock(stock);
-        book.setReleaseDate(releaseDate);
         bookService.updateBook(book);
-        return "success";
+        FacesContext.getCurrentInstance().getExternalContext()
+                .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/home.xhtml");
+
     }
 
     public Book getBook() {

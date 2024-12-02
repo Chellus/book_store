@@ -16,37 +16,26 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String isbn;
 
-    @NotBlank
     private String title;
 
-    @NotBlank
     private String author;
 
-    @NotBlank
     private String publisher;
 
-    @Min(1)
     private int pages;
 
-    @NotBlank
     private String genre;
 
-    @NotBlank
     private String edition;
 
-    @NotBlank
     private String language;
 
-    @NotNull
     private Date releaseDate;
 
-    @Min(0)
     private int stock;
 
-    @Min(0)
     private double price;
 
     public Long getId() {
