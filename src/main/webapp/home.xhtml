@@ -38,7 +38,8 @@
                 <p:inputText id="globalFilter" onkeyup="PF('dtBooks').filter()" placeholder="Buscar libros..." />
             </span>
                     </div>
-                    <p:commandButton value="Agregar nuevo libro" action="#{bookListBean.redirectToCreate}" style="margin-left: auto;" />
+                    <p:commandButton value="Agregar nuevo libro" action="#{bookListBean.redirectToCreate}" style="margin-left: auto;"
+                                     rendered="#{session.getAttribute('role') == 'admin' ? true : false}"/>
                 </div>
             </f:facet>
 
@@ -78,6 +79,9 @@
 
             <p:column headerText="Acciones">
                 <div class="action-buttons">
+                    <p:commandButton value="Comprar"
+                                     style="margin: 5px;"
+                                     action="#{bookListBean.redirectToPurchase(book.id)}" ajax="false"/>
                     <p:commandButton value="Ver Detalles"
                                      style="margin: 5px;"
                                      action="#{bookListBean.redirectToDetails(book.id)}" ajax="false"/>

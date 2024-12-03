@@ -1,14 +1,14 @@
 package com.marcelo.book_store_jsf.book;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.marcelo.book_store_jsf.order.BookOrder;
+
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -17,26 +17,19 @@ public class Book {
     private Long id;
 
     private String isbn;
-
     private String title;
-
     private String author;
-
     private String publisher;
-
     private int pages;
-
     private String genre;
-
     private String edition;
-
     private String language;
-
     private Date releaseDate;
-
     private int stock;
-
     private double price;
+
+    @OneToMany
+    private List<BookOrder> orders;
 
     public Long getId() {
         return id;

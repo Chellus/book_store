@@ -1,9 +1,9 @@
 package com.marcelo.book_store_jsf.customer;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.marcelo.book_store_jsf.order.BookOrder;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -17,6 +17,9 @@ public class Customer {
     private String email;
     private String password;
     private String role;
+
+    @OneToMany
+    private List<BookOrder> orders;
 
     public Customer() {}
 
