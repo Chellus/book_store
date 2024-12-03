@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -53,10 +54,9 @@ public class CustomerBean implements Serializable {
                 .addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public String register() {
+    public void register() throws IOException {
         if (customerService.getCustomer(email) != null) {
             addMessage(FacesMessage.SEVERITY_ERROR, "Correo ya registrado!", "Correo " + email + " ya registrado en el sistema");
-            return "failure";
         }
 
         Customer customer = new Customer();
@@ -68,13 +68,14 @@ public class CustomerBean implements Serializable {
         customer.setPassword(Hashing.hash(password));
         customer.setRole("user");
         customerService.addCustomer(customer);
-        return "success";
+        FacesContext.getCurrentInstance().getExternalContext()
+                .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/login.xhtml");
+
     }
 
-    public String login() {
+    public void login() throws IOException {
         if (!customerService.validCustomer(email, password)) {
             addMessage(FacesMessage.SEVERITY_ERROR, "Correo o contraseña inválidos", "Correo o contraseña inválidos");
-            return "failure";
         }
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         customer = customerService.getCustomer(email);
@@ -82,7 +83,9 @@ public class CustomerBean implements Serializable {
         session.setAttribute("customer", customer);
         session.setAttribute("name", customer.getName());
         session.setAttribute("role", customer.getRole());
-        return "success";
+        FacesContext.getCurrentInstance().getExternalContext()
+                .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/home.xhtml");
+
     }
 
     public String getName() {

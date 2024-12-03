@@ -14,29 +14,45 @@ public class LoginFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
-    public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain) throws IOException, ServletException {
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
         String requestURI = req.getRequestURI();
 
+        // Detecta si la solicitud es para el login o registro
         boolean isLoginReq = requestURI.contains("login");
+        boolean isRegisterReq = requestURI.contains("register");
+        boolean isIndexReq = requestURI.contains("index");
 
+        // Verifica si el usuario está autenticado
         boolean isLoggedIn = (session != null && session.getAttribute("customer") != null);
 
-
+        // Verifica si la solicitud es para un recurso de administrador
         boolean isAdminReq = requestURI.contains("admin");
 
-        boolean isAdminLoggedIn = (session != null && session.getAttribute("role") == "admin");
+        // Verifica si el usuario tiene rol de administrador
+        boolean isAdmin = (session != null && "admin".equals(session.getAttribute("role")));
 
-        System.out.println("Request URI: " + requestURI);
-
-        if (isLoginReq || isLoggedIn || requestURI.contains("register") || requestURI.contains("index")) {
+        // Permite acceso a login, registro e index sin autenticación
+        if (isLoginReq || isRegisterReq || isIndexReq) {
             chain.doFilter(request, response);
+            return;
         }
-        else {
+
+        // Permite acceso si el usuario está autenticado
+        if (isLoggedIn) {
+            if (isAdminReq && !isAdmin) {
+                // Redirige si un usuario no administrador intenta acceder a recursos de administrador
+                res.sendRedirect(req.getContextPath() + "/unauthorized.xhtml");
+            } else {
+                // Permite acceso si es administrador o el recurso no requiere privilegios
+                chain.doFilter(request, response);
+            }
+        } else {
+            // Redirige a la página de login si no está autenticado
             res.sendRedirect(req.getContextPath() + "/login.xhtml");
         }
     }

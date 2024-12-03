@@ -13,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -48,31 +49,24 @@ public class OrderBean implements Serializable {
         }
     }
 
-    public String placeOrder() {
+    public void placeOrder() throws IOException {
         System.out.println("Quantity: " + quantity);
         if (quantity < 0 || quantity > book.getStock()) {
             addMessage(FacesMessage.SEVERITY_ERROR, "Error en cantidad", "No puede ordenar más libros de los disponibles");
-            return "failure";
         }
         bookOrder.setQuantity(quantity);
         bookOrder.setOrderDate(new Date());
         bookOrder.setStatus("En proceso");
         orderService.placeOrder(bookOrder);
         addMessage(FacesMessage.SEVERITY_INFO, "Orden Confirmada", "Has comprado " + quantity + " libros.");
-        return "success";
+        FacesContext.getCurrentInstance().getExternalContext()
+                .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/home.xhtml");
+
     }
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance()
                 .addMessage(null, new FacesMessage(severity, summary, detail));
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public int getQuantity() {
@@ -89,21 +83,5 @@ public class OrderBean implements Serializable {
 
     public void setBook(Book book) {
         this.book = book;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public BookOrder getBookOrder() {
-        return bookOrder;
-    }
-
-    public void setBookOrder(BookOrder bookOrder) {
-        this.bookOrder = bookOrder;
     }
 }
