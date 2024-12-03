@@ -61,6 +61,14 @@ public class BookListBean implements Serializable {
         }
     }
 
+    public void redirectToCreate() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("book/admin/create.xhtml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance()
                 .addMessage(null, new FacesMessage(severity, summary, detail));

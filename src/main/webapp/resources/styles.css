@@ -43,6 +43,14 @@
     padding: 10px 0;
 }
 
+.books-table-header .filter-container {
+    margin-left: 20px;
+}
+
+.books-table-header .add-button {
+    margin-left: auto;
+}
+
 .filter-container {
     display: flex;
     align-items: center;
@@ -68,3 +76,9 @@
     gap: 0.5rem; /* Espaciado entre los botones */
 }
 
+.center {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #2485d9;
+    padding: 10px;
+}

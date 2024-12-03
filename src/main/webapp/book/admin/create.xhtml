@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Admin-Datapar
+  Date: 29/11/2024
+  Time: 9:43 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Crear Libro</title>
+</h:head>
+
+<h:body>
+    <h1>
+        Crear libro
+    </h1>
+    <div>
+        <h:form>
+            <p:growl id="growl" showDetail="true" showSummary="true" />
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="isbn" value="#{bookBean.isbn}" required="true"/>
+                <p:outputLabel for="@previous" value="ISBN"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="title" value="#{bookBean.title}" required="true"/>
+                <p:outputLabel for="@previous" value="Título"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="author" value="#{bookBean.author}" required="true"/>
+                <p:outputLabel for="@previous" value="Autor"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="publisher" value="#{bookBean.publisher}" required="true"/>
+                <p:outputLabel for="@previous" value="Editorial"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="pages" value="#{bookBean.pages}" required="true"/>
+                <p:outputLabel for="@previous" value="Cant. de páginas"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="genre" value="#{bookBean.genre}" required="true"/>
+                <p:outputLabel for="@previous" value="Género"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="edition" value="#{bookBean.edition}" required="true"/>
+                <p:outputLabel for="@previous" value="Edición"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="language" value="#{bookBean.language}" required="true"/>
+                <p:outputLabel for="@previous" value="Idioma"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:datePicker id="navigator" value="#{bookBean.releaseDate}" monthNavigator="true" yearNavigator="true" showWeek="true" />
+                <p:outputLabel for="@previous" value="Fecha de lanzamiento"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="stock" value="#{bookBean.stock}" required="true"/>
+                <p:outputLabel for="@previous" value="Stock"/>
+            </span>
+
+            <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
+                <p:inputText id="price" value="#{bookBean.price}" required="true"/>
+                <p:outputLabel for="@previous" value="Precio"/>
+            </span>
+
+            <p:commandButton style="margin: 5px" id="create_btn" action="#{bookBean.add()}" value="Añadir" update="growl"/>
+        </h:form>
+
+    </div>
+</h:body>
+
+</html>

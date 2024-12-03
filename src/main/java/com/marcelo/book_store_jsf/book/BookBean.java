@@ -58,7 +58,7 @@ public class BookBean implements Serializable {
         }
     }
 
-    public String add() {
+    public void add() throws IOException {
         book = new Book();
         book.setIsbn(isbn);
         book.setTitle(title);
@@ -72,7 +72,8 @@ public class BookBean implements Serializable {
         book.setStock(stock);
         book.setReleaseDate(releaseDate);
         bookService.addBook(book);
-        return "success";
+        FacesContext.getCurrentInstance().getExternalContext()
+                .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/home.xhtml");
     }
 
     public void update() throws IOException {
