@@ -78,4 +78,12 @@ public class Customer {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public List<BookOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<BookOrder> orders) {
+        this.orders = orders;
+    }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Admin-Datapar
+  Date: 28/11/2024
+  Time: 10:29 AM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Home</title>
+    <h:outputStylesheet name="styles.css"/>
+</h:head>
+
+<h:body>
+    <p:outputLabel value="Sesión iniciada como #{session.getAttribute('role')} #{session.getAttribute('name')}"  />
+    <h:form>
+        <p:growl id="messages" />
+        <!-- PrimeFaces DataTable para mostrar los libros -->
+        <p:dataTable id="dt-orders" value="#{customerBean.orders}" widgetVar="dtOrders" var="order"
+                     rows="10" rowKey="#{order.id}" paginator="true" paginatorPosition="bottom" styleClass="book-table"
+                     resizableColumns="true" liveResize="true">
+
+            <!-- Columna para el Título -->
+            <p:column headerText="Título">
+                <h:outputText value="#{order.book.title}" />
+            </p:column>
+
+            <!-- Columna para la cantidad -->
+            <p:column headerText="Cantidad">
+                <h:outputText value="#{order.quantity}" />
+            </p:column>
+
+            <!-- Columna para el Precio -->
+            <p:column headerText="Precio">
+                <h:outputText value="#{order.totalPrice}$" />
+            </p:column>
+            <!-- Columna para la Fecha de Lanzamiento -->
+            <p:column headerText="Fecha de Lanzamiento">
+                <h:outputText value="#{order.orderDate}">
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Estado">
+                <h:outputText value="#{order.status}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+</h:body>
+
+</html>

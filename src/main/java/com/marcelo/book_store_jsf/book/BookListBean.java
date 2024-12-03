@@ -53,6 +53,14 @@ public class BookListBean implements Serializable {
         this.selectedBook = selectedBook;
     }
 
+    public void redirectToOrders() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("orders.xhtml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void redirectToPurchase(Long bookId) {
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("purchase.xhtml?bookId=" + bookId);

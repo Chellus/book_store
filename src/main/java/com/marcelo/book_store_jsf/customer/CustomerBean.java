@@ -1,21 +1,28 @@
 package com.marcelo.book_store_jsf.customer;
 
+import com.marcelo.book_store_jsf.order.BookOrder;
+import com.marcelo.book_store_jsf.order.OrderService;
 import com.marcelo.book_store_jsf.util.Hashing;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @RequestScoped
 public class CustomerBean implements Serializable {
     @Inject
     private CustomerService customerService;
+
+    @Inject
+    private OrderService orderService;
 
     private Customer customer;
 
@@ -28,11 +35,17 @@ public class CustomerBean implements Serializable {
 
     private String confirmPassword;
 
+    private List<BookOrder> orders;
+
     public CustomerBean() {}
 
     @PostConstruct
     public void init() {
-
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session != null && session.getAttribute("customer") != null) {
+            customer = (Customer) session.getAttribute("customer");
+            orders = orderService.getOrdersByCustomer(customer);
+        }
     }
 
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
@@ -65,6 +78,7 @@ public class CustomerBean implements Serializable {
         }
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         customer = customerService.getCustomer(email);
+        orders = customer.getOrders();
         session.setAttribute("customer", customer);
         session.setAttribute("name", customer.getName());
         session.setAttribute("role", customer.getRole());
@@ -125,5 +139,13 @@ public class CustomerBean implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<BookOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<BookOrder> orders) {
+        this.orders = orders;
     }
 }

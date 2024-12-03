@@ -18,15 +18,45 @@
         .thirty-percent {
             width: 30%;
         }
-        /* Estilo para el precio */
+
+        .right-align {
+            text-align: right; /* Alinea los elementos a la derecha */
+        }
+
         .price {
             font-weight: bold;
             color: green;
             font-size: 1.2em;
-            margin-top: 10px;  /* Para agregar espacio entre el grid y el precio */
+        }
+
+        .price-container {
+            display: inline-flex;
+            align-items: center; /* Alinea verticalmente el texto si hay diferencias de tamaño */
+            gap: 5px; /* Espaciado entre "Precio:" y el valor */
+        }
+
+        .price-label {
+            font-weight: bold;
+            color: green;
+        }
+
+        .price-value {
+            font-size: 1.2em;
+            color: #3c8dbc;
         }
 
 
+        .action-row {
+            display: flex;
+            justify-content: space-between; /* Espacia los elementos a ambos extremos */
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .action-row .actions {
+            display: flex;
+            gap: 10px; /* Espaciado entre el input y el botón */
+        }
     </style>
 </h:head>
 <h:body>
@@ -71,27 +101,26 @@
                 <h:outputText value="#{orderBean.book.language}" />
             </p:panelGrid>
 
-            <!-- Precio fuera del panel grid -->
-            <h:panelGroup>
-                <h:outputText value="Precio:" style="margin-top: 10px;" styleClass="ui-outputlabel" />
-                <h:outputText value="#{orderBean.book.price}"
-                              style="font-size: 1.5em; color: #3c8dbc; display: block; margin-bottom: 10px;" />
-            </h:panelGroup>
+            <!-- Nueva fila para el precio, cantidad y botón de compra -->
+            <div class="action-row">
+                <div class="price-container">
+                    <h:outputText value="Precio: " styleClass="price-label" />
+                    <h:outputText value="#{orderBean.book.price}" styleClass="price-value" />
+                </div>
+
+                <div class="actions">
+                    <p:inputText id="quantity" value="#{orderBean.quantity}" required="true" label="Cantidad"/>
+                    <p:commandButton id="purchase_btn" action="#{orderBean.placeOrder()}" value="Comprar" update="growl">
+                        <p:confirm header="Confirmar" message="Desea confirmar la compra?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                </div>
+            </div>
+
 
             <h:panelGroup>
                 <p:commandButton value="Volver" action="/home.xhtml" ajax="false"/>
             </h:panelGroup>
-
         </p:panel>
-
-        <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
-                <p:inputText id="quantity" value="#{orderBean.quantity}" required="true"/>
-                <p:outputLabel for="@previous" value="Cantidad a comprar"/>
-            </span>
-
-        <p:commandButton style="margin: 5px" id="purchase_btn" action="#{orderBean.placeOrder()}" value="Comprar" update="growl">
-            <p:confirm header="Confirmar" message="Desea confirmar la compra?" icon="ui-icon-alert"/>
-        </p:commandButton>
 
         <p:confirmDialog global="true" widgetVar="dialog">
             <p:commandButton value="Comprar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>

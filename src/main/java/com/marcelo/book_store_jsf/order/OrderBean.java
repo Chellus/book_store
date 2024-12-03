@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.util.Date;
 
 @Named
 @ViewScoped
@@ -48,11 +49,14 @@ public class OrderBean implements Serializable {
     }
 
     public String placeOrder() {
-        if (quantity < 0 && quantity > bookOrder.getQuantity()) {
+        System.out.println("Quantity: " + quantity);
+        if (quantity < 0 || quantity > book.getStock()) {
             addMessage(FacesMessage.SEVERITY_ERROR, "Error en cantidad", "No puede ordenar más libros de los disponibles");
             return "failure";
         }
         bookOrder.setQuantity(quantity);
+        bookOrder.setOrderDate(new Date());
+        bookOrder.setStatus("En proceso");
         orderService.placeOrder(bookOrder);
         addMessage(FacesMessage.SEVERITY_INFO, "Orden Confirmada", "Has comprado " + quantity + " libros.");
         return "success";

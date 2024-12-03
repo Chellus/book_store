@@ -5,6 +5,7 @@ import com.marcelo.book_store_jsf.book.Book;
 import com.marcelo.book_store_jsf.customer.Customer;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class BookOrder {
@@ -14,6 +15,8 @@ public class BookOrder {
 
     private int quantity;
     private double totalPrice;
+    private Date orderDate;
+    private String status;
 
     @ManyToOne
     private Customer customer;
@@ -43,6 +46,22 @@ public class BookOrder {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Customer getCustomer() {
