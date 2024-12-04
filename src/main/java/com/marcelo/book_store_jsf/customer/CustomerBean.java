@@ -44,6 +44,7 @@ public class CustomerBean implements Serializable {
     public void init() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         if (session != null && session.getAttribute("customer") != null) {
+            System.out.println("INIT CUSTOMERBEAN DA QUE EXISTE SESION");
             customer = (Customer) session.getAttribute("customer");
             orders = orderService.getOrdersByCustomer(customer);
         }
@@ -76,6 +77,7 @@ public class CustomerBean implements Serializable {
     public void login() throws IOException {
         if (!customerService.validCustomer(email, password)) {
             addMessage(FacesMessage.SEVERITY_ERROR, "Correo o contraseña inválidos", "Correo o contraseña inválidos");
+            return;
         }
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
         customer = customerService.getCustomer(email);
@@ -87,6 +89,19 @@ public class CustomerBean implements Serializable {
                 .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/home.xhtml");
 
     }
+
+    public void logout() throws IOException {
+        // Obtener la sesión actual y invalidarla
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        if (session != null) {
+            session.invalidate(); // Invalidar la sesión para cerrar sesión
+        }
+
+        // Redirigir al usuario a la página de login después de cerrar sesión
+        FacesContext.getCurrentInstance().getExternalContext()
+                .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/login.xhtml");
+    }
+
 
     public String getName() {
         return name;

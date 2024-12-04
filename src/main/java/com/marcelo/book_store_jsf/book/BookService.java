@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.List;
 
 @Stateless
@@ -20,13 +21,12 @@ public class BookService {
     }
 
     public List<Book> getBooks() {
-        CriteriaQuery<Book> criteria = em.getCriteriaBuilder().createQuery(Book.class);
-        criteria.select(criteria.from(Book.class));
-        return em.createQuery(criteria).getResultList();
+        TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b WHERE b.deletedAt IS NULL", Book.class);
+        return query.getResultList();
     }
 
     public Book getBook(Long id) {
-        TypedQuery<Book> query = em.createQuery("select b from Book b where b.id = :id", Book.class);
+        TypedQuery<Book> query = em.createQuery("select b from Book b where b.id = :id and b.deletedAt is null", Book.class);
         query.setParameter("id", id);
         List<Book> books = query.getResultList();
         return books.isEmpty() ? null : books.get(0);
@@ -37,8 +37,10 @@ public class BookService {
     }
 
     public void deleteBook(Long id) {
-        Query query = em.createQuery("delete from Book b where b.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+        Book book = em.find(Book.class, id);
+        if (book != null) {
+            book.softDelete();
+            em.merge(book); // Actualizar el estado del libro en la base de datos
+        }
     }
 }

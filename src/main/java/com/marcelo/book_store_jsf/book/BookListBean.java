@@ -9,6 +9,8 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
+
 
 @Named
 @ViewScoped
@@ -18,6 +20,7 @@ public class BookListBean implements Serializable {
     private BookService bookService;
 
     private List<Book> books;
+    private List<Book> filteredBooks;
     private Book selectedBook;
 
     @PostConstruct
@@ -85,8 +88,32 @@ public class BookListBean implements Serializable {
         }
     }
 
+    public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+        if (filterText == null) {
+            return true;
+        }
+
+        if (filterText.isEmpty()) {
+            return true;
+        }
+
+        Book book = (Book) value;
+        return book.getTitle().toLowerCase().contains(filterText)
+                || book.getAuthor().toLowerCase().contains(filterText)
+                || book.getGenre().toLowerCase().contains(filterText);
+    }
+
     public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
         FacesContext.getCurrentInstance()
                 .addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public List<Book> getFilteredBooks() {
+        return filteredBooks;
+    }
+
+    public void setFilteredBooks(List<Book> filteredBooks) {
+        this.filteredBooks = filteredBooks;
     }
 }

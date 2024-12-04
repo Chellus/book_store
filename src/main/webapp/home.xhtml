@@ -22,15 +22,13 @@
 
 <h:body>
     <p:outputLabel value="Sesión iniciada como #{session.getAttribute('role')} #{session.getAttribute('name')}"  />
-    <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px;">
-        <p:commandButton value="Ver órdenes" action="#{bookListBean.redirectToOrders}" style="margin-left: auto;"/>
-    </div>
     <h:form>
         <p:growl id="messages" />
         <!-- PrimeFaces DataTable para mostrar los libros -->
         <p:dataTable id="dt-books" value="#{bookListBean.books}" widgetVar="dtBooks" var="book"
                      rows="10" rowKey="#{book.id}" paginator="true" paginatorPosition="bottom" styleClass="book-table"
-                     resizableColumns="true" liveResize="true">
+                     resizableColumns="true" liveResize="true" filteredValue="#{bookListBean.filteredBooks}"
+                     globalFilterFunction="#{bookListBean.globalFilterFunction}">
 
             <f:facet name="header">
                 <div class="books-table-header" style="display: flex; align-items: center; justify-content: space-between;">
@@ -46,16 +44,13 @@
                 </div>
             </f:facet>
 
-
-
-
             <!-- Columna para el Título -->
-            <p:column headerText="Título" filterBy="#{book.title}" filterStyle="display: none">
+            <p:column headerText="Título">
                 <h:outputText value="#{book.title}" />
             </p:column>
 
             <!-- Columna para el Autor -->
-            <p:column headerText="Autor" filterBy="#{book.author}" filterStyle="display: none">
+            <p:column headerText="Autor">
                 <h:outputText value="#{book.author}" />
             </p:column>
 
@@ -65,7 +60,7 @@
             </p:column>
 
             <!-- Columna para el Género -->
-            <p:column headerText="Género" filterBy="#{book.genre}" filterStyle="display:none">
+            <p:column headerText="Género">
                 <h:outputText value="#{book.genre}" />
             </p:column>
 
@@ -102,6 +97,14 @@
                 </div>
             </p:column>
 
+            <f:facet name="footer">
+                <div class="books-table-header" style="display: flex; align-items: center; justify-content: space-between;">
+
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px;">
+                        <p:commandButton value="Ver órdenes" action="#{bookListBean.redirectToOrders}" style="margin-left: auto;"/>
+                    </div>
+                </div>
+            </f:facet>
 
         </p:dataTable>
         <p:confirmDialog global="true" widgetVar="dialog">
@@ -109,6 +112,9 @@
             <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
         </p:confirmDialog>
     </h:form>
+    <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px;">
+        <p:commandButton value="Cerrar sesión" action="#{customerBean.logout()}" style="margin-left: auto; background-color: red"/>
+    </div>
 
 </h:body>
 

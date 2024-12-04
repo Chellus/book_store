@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Book {
@@ -28,8 +29,19 @@ public class Book {
     private int stock;
     private double price;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deletedAt;
+
     @OneToMany
     private List<BookOrder> orders;
+
+    public boolean isDeleted() {
+        return deletedAt != null;
+    }
+
+    public void softDelete() {
+        this.deletedAt = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -125,5 +137,25 @@ public class Book {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Date getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(Date deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return pages == book.pages && stock == book.stock && Double.compare(price, book.price) == 0 && Objects.equals(id, book.id) && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(publisher, book.publisher) && Objects.equals(genre, book.genre) && Objects.equals(edition, book.edition) && Objects.equals(language, book.language) && Objects.equals(releaseDate, book.releaseDate) && Objects.equals(deletedAt, book.deletedAt) && Objects.equals(orders, book.orders);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, isbn, title, author, publisher, pages, genre, edition, language, releaseDate, stock, price, deletedAt, orders);
     }
 }

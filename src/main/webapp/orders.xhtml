@@ -15,7 +15,7 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Home</title>
+    <title>Compras</title>
     <h:outputStylesheet name="styles.css"/>
 </h:head>
 
@@ -53,7 +53,9 @@
             </p:column>
         </p:dataTable>
     </h:form>
-
+    <div style="display: flex; align-items: center; justify-content: space-between; margin: 20px;">
+        <p:commandButton value="Volver" action="#{orderBean.redirectToHome()}" style="margin-left: auto"/>
+    </div>
 </h:body>
 
 </html>

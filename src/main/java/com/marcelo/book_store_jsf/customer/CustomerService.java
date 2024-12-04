@@ -26,7 +26,8 @@ public class CustomerService {
 
     public boolean validCustomer(String email, String password) {
         Customer customer = getCustomer(email);
-
+        System.out.println(customer);
+        System.out.println("Contraseña valida: " + Hashing.matches(password, customer.getPassword()));
         if (customer == null) {
            return false;
         }
