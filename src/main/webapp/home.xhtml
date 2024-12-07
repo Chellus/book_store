@@ -12,7 +12,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
@@ -21,6 +20,27 @@
 </h:head>
 
 <h:body>
+    <div style="padding: 30px;
+                text-align: center;
+                background: #2485d9;
+                color: white;
+                border: #2485d9;
+                font-family: 'Arial Rounded MT Bold',sans-serif;
+                font-size: 20px;">
+        <h1>BOOK STORE</h1>
+    </div>
+    <p:sidebar widgetVar="sb">
+        <h1>Opciones</h1>
+        <p:panel style="width: 100%; max-width: 1200px; height: auto; margin: 0 auto;">
+            <p:panelGrid columns="1" styleClass="spaced-rows ui-panelgrid ui-widget"
+                         style="width: 100%">
+                <p:link value="Agregar nuevo libro" outcome="admin/create.xhtml"/>
+                <p:link value="Agregar nuevo administrador" outcome="admin/users.xhtml"/>
+
+            </p:panelGrid>
+        </p:panel>
+
+    </p:sidebar>
     <p:outputLabel value="Sesión iniciada como #{session.getAttribute('role')} #{session.getAttribute('name')}"  />
     <h:form>
         <p:growl id="messages" />
@@ -39,7 +59,8 @@
                             <p:inputText id="globalFilter" onkeyup="PF('dtBooks').filter()" placeholder="Buscar libros..." />
                         </span>
                     </div>
-                    <p:commandButton value="Agregar nuevo libro" action="#{bookListBean.redirectToCreate}" style="margin-left: auto;"
+                    <p:commandButton value="Ver opciones de administrador..." onclick="PF('sb').show()"
+                                     style="margin-left: auto"
                                      rendered="#{session.getAttribute('role') == 'admin' ? true : false}"/>
                 </div>
             </f:facet>
@@ -78,17 +99,17 @@
             <p:column headerText="Acciones" style="width: max-content;">
                 <div class="action-buttons">
                     <p:commandButton value="Comprar"
-                                     style="margin: 5px;"
+                                     style="margin: 5px; background-color: green; border: green"
                                      action="#{bookListBean.redirectToPurchase(book.id)}" ajax="false"/>
                     <p:commandButton value="Ver Detalles"
-                                     style="margin: 5px;"
+                                     style="margin: 5px; border: #2485d9"
                                      action="#{bookListBean.redirectToDetails(book.id)}" ajax="false"/>
                     <p:commandButton value="Editar"
-                                     style="background-color: green; margin: 5px"
+                                     style="background-color: darkgoldenrod; margin: 5px; border: darkgoldenrod"
                                      rendered="#{session.getAttribute('role') == 'admin' ? true : false}"
                                      action="#{bookListBean.editBook(book.id)}" ajax="false"/>
                     <p:commandButton value="Eliminar"
-                                     style="background-color: red; margin: 5px"
+                                     style="background-color: red; margin: 5px; border: red"
                                      rendered="#{session.getAttribute('role') == 'admin' ? true : false}"
                                      action="#{bookListBean.deleteBook(book.id)}"
                                      ajax="true" update="dt-books">

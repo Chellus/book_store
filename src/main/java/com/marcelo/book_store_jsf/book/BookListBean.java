@@ -35,7 +35,7 @@ public class BookListBean implements Serializable {
 
     public void editBook(Long bookId) {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("book/admin/edit.xhtml?bookId=" + bookId);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("admin/edit.xhtml?bookId=" + bookId);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -82,7 +82,7 @@ public class BookListBean implements Serializable {
 
     public void redirectToCreate() {
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("book/admin/create.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("admin/create.xhtml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

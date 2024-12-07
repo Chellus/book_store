@@ -55,7 +55,7 @@ public class CustomerBean implements Serializable {
                 .addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
-    public void register() throws IOException {
+    public void register(String role) throws IOException {
         if (customerService.getCustomer(email) != null) {
             addMessage(FacesMessage.SEVERITY_ERROR, "Correo ya registrado!", "Correo " + email + " ya registrado en el sistema");
         }
@@ -67,7 +67,7 @@ public class CustomerBean implements Serializable {
         customer.setPhone(phone);
         customer.setEmail(email);
         customer.setPassword(Hashing.hash(password));
-        customer.setRole("user");
+        customer.setRole(role);
         customerService.addCustomer(customer);
         FacesContext.getCurrentInstance().getExternalContext()
                 .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/login.xhtml");

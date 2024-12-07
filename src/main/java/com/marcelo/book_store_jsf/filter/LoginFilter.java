@@ -26,6 +26,7 @@ public class LoginFilter implements Filter {
         boolean isLoginReq = requestURI.contains("login");
         boolean isRegisterReq = requestURI.contains("register");
         boolean isIndexReq = requestURI.contains("index");
+        boolean isHomeReq = requestURI.contains("home");
 
         // Verifica si el usuario está autenticado
         boolean isLoggedIn = (session != null && session.getAttribute("customer") != null);
@@ -37,7 +38,7 @@ public class LoginFilter implements Filter {
         boolean isAdmin = (session != null && "admin".equals(session.getAttribute("role")));
 
         // Permite acceso a login, registro e index sin autenticación
-        if (isLoginReq || isRegisterReq || isIndexReq) {
+        if (isLoginReq || isRegisterReq || isIndexReq || isHomeReq) {
             chain.doFilter(request, response);
             return;
         }

@@ -56,12 +56,11 @@
                 <p:password id="confirm_pass" value="#{customerBean.confirmPassword}" required="true"/>
                 <p:outputLabel for="@previous" value="Confirmar contraseña"/>
             </span>
-            <p:commandButton style="margin: 5px" id="register_button" action="#{customerBean.register('user')}" value="Registrarse" update="growl"/>
+            <p:commandButton style="margin: 5px" id="register_button" action="#{customerBean.register('admin')}" value="Registrarse" update="growl"/>
         </h:form>
 
         <p style="margin-top: 10px">
-            <p:outputLabel value="Ya tiene un usuario? Inicie sesión " />
-            <p:link value="aquí." outcome="login"/>
+            <p:link value="Volver a la página principal" outcome="/home.xhtml"/>
         </p>
     </div>
 </h:body>
