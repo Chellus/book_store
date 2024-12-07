@@ -1,16 +1,27 @@
 package com.marcelo.book_store_jsf.book;
 
+import com.marcelo.book_store_jsf.util.BookAPI;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.DataInput;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 @Named
 @ViewScoped
@@ -32,6 +43,7 @@ public class BookBean implements Serializable {
     private String edition;
     private String language;
     private double price;
+    private String imageUrl;
 
     public BookBean() {
 
@@ -58,8 +70,9 @@ public class BookBean implements Serializable {
         }
     }
 
-    public void add() throws IOException {
+    public void add() throws IOException, ParseException, java.text.ParseException {
         book = new Book();
+        fetchBookDetailsByIsbn();
         book.setIsbn(isbn);
         book.setTitle(title);
         book.setAuthor(author);
@@ -71,6 +84,7 @@ public class BookBean implements Serializable {
         book.setLanguage(language);
         book.setStock(stock);
         book.setReleaseDate(releaseDate);
+        book.setImageUrl(imageUrl);
         bookService.addBook(book);
         FacesContext.getCurrentInstance().getExternalContext()
                 .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/home.xhtml");
@@ -83,6 +97,17 @@ public class BookBean implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext()
                 .redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/home.xhtml");
 
+    }
+
+    public void fetchBookDetailsByIsbn() throws IOException, ParseException, java.text.ParseException {
+        Book book = BookAPI.getBook(isbn);
+        title = book.getTitle();
+        author = book.getAuthor();
+        publisher = book.getPublisher();
+        pages = book.getPages();
+        //releaseDate = book.getReleaseDate();
+        imageUrl = book.getImageUrl();
+        System.out.printf("\t\tReceived data from API:\nTitle:%s\nAuthor:%s", title, author);
     }
 
     public Book getBook() {
@@ -179,5 +204,13 @@ public class BookBean implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

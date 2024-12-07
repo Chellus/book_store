@@ -1,10 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Created by IntelliJ IDEA.
-  User: Admin-Datapar
-  Date: 29/11/2024
-  Time: 9:43 AM
--->
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -22,14 +15,23 @@
         Crear libro
     </h1>
     <div>
-        <h:form>
+        <h:form id="form">
             <p:growl id="growl" showDetail="true" showSummary="true" />
 
+            <!-- Campo ISBN con botón para buscar detalles -->
             <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
                 <p:inputText id="isbn" value="#{bookBean.isbn}" required="true"/>
                 <p:outputLabel for="@previous" value="ISBN"/>
+                <p:commandButton
+                        id="fetchDetails"
+                        value="Buscar Detalles"
+                        action="#{bookBean.fetchBookDetailsByIsbn}"
+                        process="@this isbn"
+                        update="form"
+                        style="margin-left: 10px"/>
             </span>
 
+            <!-- Campos autocompletados -->
             <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
                 <p:inputText id="title" value="#{bookBean.title}" required="true"/>
                 <p:outputLabel for="@previous" value="Título"/>
@@ -66,7 +68,7 @@
             </span>
 
             <span class="ui-float-label" style="margin-top: 30px; margin-bottom: 20px; margin-left: 10px">
-                <p:datePicker id="navigator" value="#{bookBean.releaseDate}" monthNavigator="true" yearNavigator="true" showWeek="true" />
+                <p:datePicker id="releaseDate" value="#{bookBean.releaseDate}" monthNavigator="true" yearNavigator="true" showWeek="true" required="true"/>
                 <p:outputLabel for="@previous" value="Fecha de lanzamiento"/>
             </span>
 
@@ -80,7 +82,9 @@
                 <p:outputLabel for="@previous" value="Precio"/>
             </span>
 
-            <p:commandButton style="margin: 5px" id="create_btn" action="#{bookBean.add()}" value="Añadir" update="growl"/>
+            <!-- Botón para añadir el libro -->
+            <p:commandButton style="margin: 5px" id="create_btn" action="#{bookBean.add()}" value="Añadir" update="form growl"/>
+
         </h:form>
 
     </div>

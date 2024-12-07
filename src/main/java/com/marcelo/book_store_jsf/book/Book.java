@@ -26,8 +26,12 @@ public class Book {
     private String edition;
     private String language;
     private Date releaseDate;
+
+
     private int stock;
     private double price;
+
+    private String imageUrl;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date deletedAt;
@@ -145,6 +149,15 @@ public class Book {
 
     public void setDeletedAt(Date deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

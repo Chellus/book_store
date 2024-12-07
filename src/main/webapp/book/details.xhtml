@@ -6,72 +6,96 @@
 <h:head>
     <title>Detalles del Libro</title>
     <style>
-        /* Estilo personalizado para aumentar separación entre filas */
+        /* Contenedor principal con Flexbox */
+        .details-container {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+            width: 100%;
+            gap: 20px; /* Espaciado entre imagen y detalles */
+        }
+
+        /* Estilos de la imagen */
+        .book-image {
+            max-width: 250px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Detalles del libro */
+        .book-details {
+            flex-grow: 1; /* Permite que esta columna ocupe el espacio restante */
+        }
+
+        /* Ajuste de las celdas del panelGrid */
         .spaced-rows .ui-panelgrid-cell {
             padding: 10px 0; /* Espaciado vertical */
-        }
-
-        .twenty-percent {
-            width: 20%;
-        }
-
-        .thirty-percent {
-            width: 30%;
         }
     </style>
 </h:head>
 <h:body>
     <h:form>
-        <p:panel header="Detalles del Libro" style="width: 90%; max-width: 1200px; height: auto; margin: 0 auto;">
+        <p:panel header="Detalles del Libro" style="width: 90%; max-width: 1200px; margin: 0 auto;">
 
-            <!-- Detalles dentro del panel grid -->
-            <p:panelGrid columns="4" styleClass="spaced-rows ui-panelgrid ui-widget"
-                         style="width: 100%;"
-                         columnClasses="twenty-percent ui-widget-header,thirty-percent ui-widget-content, twenty-percent ui-widget-header, thirty-percent ui-widget-content">
-                <h:outputText value="ISBN:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.isbn}" />
+            <!-- Contenedor principal con Flexbox -->
+            <div class="details-container">
+                <!-- Columna de la imagen -->
+                <div>
+                    <h:graphicImage value="#{bookBean.book.imageUrl}" alt="Portada del libro" class="book-image" />
+                </div>
 
-                <h:outputText value="Título:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.title}" />
+                <!-- Columna de los detalles -->
+                <div class="book-details">
+                    <p:panelGrid columns="4" styleClass="spaced-rows ui-panelgrid ui-widget"
+                                 style="width: 100%;"
+                                 columnClasses="twenty-percent ui-widget-header,thirty-percent ui-widget-content, twenty-percent ui-widget-header, thirty-percent ui-widget-content">
+                        <h:outputText value="ISBN:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.isbn}" />
 
-                <h:outputText value="Autor:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.author}" />
+                        <h:outputText value="Título:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.title}" />
 
-                <h:outputText value="Editorial:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.publisher}" />
+                        <h:outputText value="Autor:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.author}" />
 
-                <h:outputText value="Páginas:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.pages}" />
+                        <h:outputText value="Editorial:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.publisher}" />
 
-                <h:outputText value="Género:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.genre}" />
+                        <h:outputText value="Páginas:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.pages}" />
 
-                <h:outputText value="Fecha de Publicación:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.releaseDate}">
-                    <f:convertDateTime pattern="dd/MM/yyyy" />
-                </h:outputText>
+                        <h:outputText value="Género:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.genre}" />
 
-                <h:outputText value="Stock:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.stock}" />
+                        <h:outputText value="Fecha de Publicación:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.releaseDate}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
 
-                <h:outputText value="Edición:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.edition}" />
+                        <h:outputText value="Stock:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.stock}" />
 
-                <h:outputText value="Idioma:" style="padding-left: 5px"/>
-                <h:outputText value="#{bookBean.book.language}" />
-            </p:panelGrid>
+                        <h:outputText value="Edición:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.edition}" />
 
-            <!-- Precio fuera del panel grid -->
-            <h:panelGroup>
-                <h:outputText value="Precio:" style="margin-top: 10px;" styleClass="ui-outputlabel" />
-                <h:outputText value="#{bookBean.book.price}"
-                              style="font-size: 1.5em; color: #3c8dbc; display: block; margin-bottom: 10px;" />
-            </h:panelGroup>
+                        <h:outputText value="Idioma:" style="padding-left: 5px"/>
+                        <h:outputText value="#{bookBean.book.language}" />
+                    </p:panelGrid>
 
-            <h:panelGroup>
-                <p:commandButton value="Volver" action="/home.xhtml" ajax="false"/>
-            </h:panelGroup>
+                    <!-- Precio fuera del panel grid -->
+                    <h:panelGroup>
+                        <h:outputText value="Precio:" style="margin-top: 10px;" styleClass="ui-outputlabel" />
+                        <h:outputText value="#{bookBean.book.price}"
+                                      style="font-size: 1.5em; color: #3c8dbc; display: block; margin-bottom: 10px;" />
+                    </h:panelGroup>
 
+                    <!-- Botón de volver -->
+                    <h:panelGroup>
+                        <p:commandButton value="Volver" action="/home.xhtml" ajax="false"/>
+                    </h:panelGroup>
+                </div>
+            </div>
         </p:panel>
     </h:form>
 </h:body>
